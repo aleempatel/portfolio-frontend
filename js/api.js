@@ -49,9 +49,6 @@
     getCourses: () => request("/courses"),
     getExperience: () => request("/experience"),
 
-    // ---- contact form (public) ----
-    sendContact: (payload) => request("/contact", { method: "POST", body: payload }),
-
     // ---- auth ----
     login: (username, password) => request("/auth/login", { method: "POST", body: { username, password } }),
     changePassword: (currentPassword, newPassword) =>

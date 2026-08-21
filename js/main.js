@@ -19,6 +19,7 @@
       mobileButton.addEventListener("click", () => {
         const isOpen = !mobileMenu.classList.contains("hidden");
         mobileMenu.classList.toggle("hidden", isOpen);
+        mobileMenu.classList.toggle("mobile-menu-open", !isOpen);
         mobileButton.setAttribute("aria-expanded", String(!isOpen));
         mobileButton.setAttribute("aria-label", isOpen ? "Open navigation" : "Close navigation");
       });
@@ -31,6 +32,7 @@
           event.preventDefault();
           target.scrollIntoView({ behavior: "smooth", block: "start" });
           mobileMenu.classList.add("hidden");
+          mobileMenu.classList.remove("mobile-menu-open");
           mobileButton.setAttribute("aria-expanded", "false");
           mobileButton.setAttribute("aria-label", "Open navigation");
         });
@@ -192,54 +194,30 @@
 
       /* ============================================================
          CONTACT FORM
-         Sends the message to the backend (/api/contact), which emails
-         it to whatever address is currently set as the profile email
-         (editable from the admin panel) - no frontend change needed
-         if that address is updated.
+         Functional-styled front-end interaction.
+         Replace with a real endpoint to enable server delivery.
       ============================================================ */
 
       const contactForm = document.getElementById("contactForm");
       const formStatus = document.getElementById("formStatus");
       const submitText = document.getElementById("submitText");
-      const submitBtn = contactForm.querySelector("button[type=submit]");
 
-      contactForm.addEventListener("submit", async event => {
+      contactForm.addEventListener("submit", event => {
         event.preventDefault();
 
         const data = new FormData(contactForm);
-        const payload = {
-          name: (data.get("name") || "").toString().trim(),
-          email: (data.get("email") || "").toString().trim(),
-          subject: (data.get("subject") || "").toString().trim(),
-          message: (data.get("message") || "").toString().trim(),
-        };
+        const name = data.get("name");
 
-        submitBtn.disabled = true;
-        submitText.textContent = "Sending…";
-        formStatus.textContent = "";
+        submitText.textContent = "Message Prepared ✓";
+        formStatus.textContent =
+          `Thanks ${name || "there"} — your message is ready to transmit.`;
 
-        try {
-          await window.PortfolioAPI.sendContact(payload);
+        formStatus.className =
+          "mt-3 text-center text-[10px] font-mono text-emerald-400";
 
-          submitText.textContent = "Message Sent ✓";
-          formStatus.textContent =
-            `Thanks ${payload.name || "there"} — your message is on its way.`;
-          formStatus.className =
-            "mt-3 text-center text-[10px] font-mono text-emerald-400";
-
-          contactForm.reset();
-        } catch (err) {
+        setTimeout(() => {
           submitText.textContent = "Transmit Message";
-          formStatus.textContent =
-            err.message || "Something went wrong — please try again.";
-          formStatus.className =
-            "mt-3 text-center text-[10px] font-mono text-rose-400";
-        } finally {
-          submitBtn.disabled = false;
-          setTimeout(() => {
-            submitText.textContent = "Transmit Message";
-          }, 3500);
-        }
+        }, 3500);
       });
 
       /* ============================================================

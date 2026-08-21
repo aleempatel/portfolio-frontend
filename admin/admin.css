@@ -7,18 +7,18 @@
 
 * { box-sizing: border-box; }
 
-/* The public site's stylesheet forces Times New Roman site-wide with !important;
-   override it back to a normal UI font in here so the dashboard stays readable. */
+/* Explicit Inter override, kept for admin-panel independence from the
+   public site's typography rules (and safe even if style.css changes). */
 body.admin-body,
 body.admin-body * {
-  font-family: "Inter", system-ui, -apple-system, sans-serif !important;
+  font-family: "Times New Roman", Times, serif !important;
 }
 
 body.admin-body {
   min-height: 100vh;
   background: var(--bg, #05060a);
   color: #e2e8f0;
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Times New Roman", Times, serif;
 }
 
 /* ---------- Login screen ---------- */
