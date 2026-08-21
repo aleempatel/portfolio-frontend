@@ -5,7 +5,7 @@ piece of content — profile info, both intro texts, the rotating role
 text under your name, skills, education, courses, experience, and
 projects — is stored in the backend and editable from the admin panel,
 not hardcoded in the HTML.
- 
+
 ## Folder structure
 
 ```

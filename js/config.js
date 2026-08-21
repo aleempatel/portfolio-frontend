@@ -6,7 +6,7 @@
 (function (root) {
   "use strict";
 
-  const API_BASE_URL = "http://localhost:5000/api";
+  const API_BASE_URL = "https://site--portfolio-backend--rpc9rht75vvm.code.run/api";
 
   // Root of the backend (without the trailing /api) - used to resolve
   // uploaded file paths like "uploads/profile-123.jpg" into full URLs.
