@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin Panel — Portfolio</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="/js/tailwind-config.js"></script>
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="stylesheet" href="/admin/admin.css" />
+</head>
+<body class="admin-body">
+
+  <!-- ======================= LOGIN SCREEN ======================= -->
+  <div id="loginScreen" class="login-shell">
+    <div class="login-card glass rounded-2xl p-8">
+      <div class="mb-7 text-center">
+        <div class="mx-auto w-12 h-12 rounded-2xl border border-cyan-400/25 bg-cyan-400/10 grid place-items-center text-cyan-200 mb-4">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/>
+          </svg>
+        </div>
+        <h1 class="text-xl font-bold text-white">Admin Panel</h1>
+        <p class="mt-1.5 text-xs text-slate-500">Sign in to manage your portfolio content.</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="mb-4">
+          <label class="field-label" for="loginUsername">Username</label>
+          <input class="field-input" type="text" id="loginUsername" autocomplete="username" required />
+        </div>
+        <div class="mb-4">
+          <label class="field-label" for="loginPassword">Password</label>
+          <input class="field-input" type="password" id="loginPassword" autocomplete="current-password" required />
+        </div>
+
+        <div id="loginError" class="field-error hidden"></div>
+
+        <button type="submit" id="loginSubmitBtn" class="admin-btn admin-btn-primary w-full mt-2">
+          <span id="loginSubmitLabel">Sign in</span>
+        </button>
+      </form>
+
+      <a href="/index.html" class="mt-5 block text-center text-[11px] text-slate-600 hover:text-slate-400">← Back to site</a>
+    </div>
+  </div>
+
+  <!-- ======================= DASHBOARD ======================= -->
+  <div id="dashboard" class="admin-shell hidden">
+    <aside class="admin-sidebar">
+      <div class="flex items-center gap-2.5 px-2 mb-6">
+        <div class="w-8 h-8 rounded-lg border border-cyan-400/25 bg-cyan-400/10 grid place-items-center text-cyan-200 text-[10px] font-black">AP</div>
+        <div class="text-sm font-bold text-white">Admin Panel</div>
+      </div>
+
+      <nav id="sidebarNav">
+        <button class="admin-nav-btn" data-tab="profile">Profile</button>
+        <button class="admin-nav-btn" data-tab="skills">Skills</button>
+        <button class="admin-nav-btn" data-tab="education">Education</button>
+        <button class="admin-nav-btn" data-tab="courses">Courses</button>
+        <button class="admin-nav-btn" data-tab="experience">Experience</button>
+        <button class="admin-nav-btn" data-tab="projects">Projects</button>
+        <button class="admin-nav-btn" data-tab="account">Account</button>
+      </nav>
+
+      <div class="mt-6 pt-5 border-t border-white/5">
+        <a href="/index.html" target="_blank" class="admin-nav-btn">↗ View site</a>
+        <button class="admin-nav-btn" id="logoutBtn">⏻ Logout</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div id="tabContent"></div>
+    </main>
+  </div>
+
+  <!-- Modal + toast mount points -->
+  <div id="modalRoot"></div>
+  <div id="toastStack" class="admin-toast-stack"></div>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>
