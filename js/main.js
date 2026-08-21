@@ -202,18 +202,32 @@
       const formStatus = document.getElementById("formStatus");
       const submitText = document.getElementById("submitText");
 
-      contactForm.addEventListener("submit", event => {
+      contactForm.addEventListener("submit", async event => {
         event.preventDefault();
 
         const data = new FormData(contactForm);
         const name = data.get("name");
+        const email = data.get("email");
+        const subject = data.get("subject");
+        const message = data.get("message");
 
-        submitText.textContent = "Message Prepared ✓";
-        formStatus.textContent =
-          `Thanks ${name || "there"} — your message is ready to transmit.`;
+        submitText.textContent = "Sending…";
+        formStatus.textContent = "";
 
-        formStatus.className =
-          "mt-3 text-center text-[10px] font-mono text-emerald-400";
+        try {
+          await window.PortfolioAPI.sendContactMessage({ name, email, subject, message });
+
+          submitText.textContent = "Message Sent ✓";
+          formStatus.textContent = `Thanks ${name || "there"} — your message has been sent.`;
+          formStatus.className =
+            "mt-3 text-center text-[10px] font-mono text-emerald-400";
+          contactForm.reset();
+        } catch (err) {
+          submitText.textContent = "Transmit Message";
+          formStatus.textContent = err.message || "Something went wrong. Please try again.";
+          formStatus.className =
+            "mt-3 text-center text-[10px] font-mono text-red-400";
+        }
 
         setTimeout(() => {
           submitText.textContent = "Transmit Message";

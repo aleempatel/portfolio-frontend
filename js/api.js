@@ -72,6 +72,9 @@
     uploadProjectImages: (id, formData) =>
       request(`/projects/${id}/images`, { method: "POST", body: formData, auth: true, isForm: true }),
     deleteProjectImage: (id, index) => request(`/projects/${id}/images/${index}`, { method: "DELETE", auth: true }),
+
+    // ---- contact form ----
+    sendContactMessage: (payload) => request("/contact", { method: "POST", body: payload }),
   };
 
   root.PortfolioAPI = api;
