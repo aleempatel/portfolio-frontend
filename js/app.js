@@ -19,6 +19,16 @@
       .replace(/'/g, "&#39;");
   }
 
+  // Ensures a stored URL actually has a protocol, otherwise the browser
+  // treats it as a relative path (e.g. "github.com/x" -> "mysite.com/github.com/x")
+  // and the link silently goes nowhere.
+  function normalizeUrl(url) {
+    if (!url) return "";
+    const trimmed = String(url).trim();
+    if (!trimmed) return "";
+    return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  }
+
   function initials(name) {
     if (!name) return "MA";
     const parts = name.trim().split(/\s+/).filter(Boolean);
@@ -252,10 +262,10 @@
 
       const links = [
         p.liveUrl
-          ? `<a href="${esc(p.liveUrl)}" target="_blank" rel="noopener noreferrer" class="btn-secondary rounded-lg px-2 py-2.5 text-center text-[10px] font-semibold">Live Demo</a>`
+          ? `<a href="${esc(normalizeUrl(p.liveUrl))}" target="_blank" rel="noopener noreferrer" class="btn-secondary rounded-lg px-2 py-2.5 text-center text-[10px] font-semibold">Live Demo</a>`
           : "",
         p.githubUrl
-          ? `<a href="${esc(p.githubUrl)}" target="_blank" rel="noopener noreferrer" class="btn-secondary rounded-lg px-2 py-2.5 text-center text-[10px] font-semibold">GitHub</a>`
+          ? `<a href="${esc(normalizeUrl(p.githubUrl))}" target="_blank" rel="noopener noreferrer" class="btn-secondary rounded-lg px-2 py-2.5 text-center text-[10px] font-semibold">GitHub</a>`
           : "",
       ]
         .filter(Boolean)
