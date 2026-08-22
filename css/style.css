@@ -695,7 +695,6 @@
 
     .tilt-inner {
       transform: translateZ(42px);
-      transform-style: preserve-3d;
     }
 
     @media (max-width: 767px) {
@@ -1036,23 +1035,9 @@ body::before {
 .btn-secondary {
   isolation: isolate;
   overflow: hidden;
-  /* Was `transform: translateZ(0)`. Any transform on this element makes it
-     establish its own 3D rendering plane; nested inside the project card's
-     `preserve-3d` tilt wrapper, that got it flattened *behind* its own
-     parent for click hit-testing (visible on screen, but clicks landed on
-     the wrapper div instead) - href-based actions like "open in new tab"
-     still worked since those don't hit-test. `position: relative` keeps the
-     same job (containing block for the ::after shimmer below) without
-     creating a transform-based 3D layer. */
-  position: relative;
+  transform: translateZ(0);
   box-shadow: 0 10px 30px rgba(0,0,0,.16);
   transition: transform .3s var(--ease-out), box-shadow .3s ease, border-color .3s ease, background .3s ease;
-  /* Without this, the pointer wobble from the parent card's 3D tilt effect
-     can register as a text-drag instead of a click, highlighting the label
-     text (blue selection) instead of following the link. */
-  -webkit-user-select: none;
-  user-select: none;
-  touch-action: manipulation;
 }
 
 .btn-primary:hover,
