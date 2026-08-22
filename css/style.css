@@ -1036,7 +1036,15 @@ body::before {
 .btn-secondary {
   isolation: isolate;
   overflow: hidden;
-  transform: translateZ(0);
+  /* Was `transform: translateZ(0)`. Any transform on this element makes it
+     establish its own 3D rendering plane; nested inside the project card's
+     `preserve-3d` tilt wrapper, that got it flattened *behind* its own
+     parent for click hit-testing (visible on screen, but clicks landed on
+     the wrapper div instead) - href-based actions like "open in new tab"
+     still worked since those don't hit-test. `position: relative` keeps the
+     same job (containing block for the ::after shimmer below) without
+     creating a transform-based 3D layer. */
+  position: relative;
   box-shadow: 0 10px 30px rgba(0,0,0,.16);
   transition: transform .3s var(--ease-out), box-shadow .3s ease, border-color .3s ease, background .3s ease;
   /* Without this, the pointer wobble from the parent card's 3D tilt effect
