@@ -94,6 +94,13 @@
         card.addEventListener("pointermove", event => {
           if (window.innerWidth < 768) return;
 
+          // Don't keep rotating the card while the pointer is over a link/button
+          // inside it - continuously moving the element under the cursor makes
+          // mousedown and mouseup land on different spots, so the browser never
+          // fires a "click" on it (right-click "open in new tab" still worked
+          // because that's a single instantaneous hit-test, not a down/up pair).
+          if (event.target.closest("a, button")) return;
+
           const rect = card.getBoundingClientRect();
           const x = (event.clientX - rect.left) / rect.width;
           const y = (event.clientY - rect.top) / rect.height;
