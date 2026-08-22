@@ -1039,6 +1039,12 @@ body::before {
   transform: translateZ(0);
   box-shadow: 0 10px 30px rgba(0,0,0,.16);
   transition: transform .3s var(--ease-out), box-shadow .3s ease, border-color .3s ease, background .3s ease;
+  /* Without this, the pointer wobble from the parent card's 3D tilt effect
+     can register as a text-drag instead of a click, highlighting the label
+     text (blue selection) instead of following the link. */
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
 }
 
 .btn-primary:hover,
