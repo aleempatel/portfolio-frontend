@@ -133,7 +133,7 @@
 
     const cvLink = document.getElementById("cvDownloadLink");
     if (cvLink && profile.resumeUrl) {
-      cvLink.href = `${apiRoot()}/api/profile/resume/download`;
+      cvLink.href = "cv-viewer.html";
     }
 
     bindContact(
