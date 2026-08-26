@@ -17,10 +17,6 @@
       display: flex;
       flex-direction: column;
     }
-    .cv-toolbar {
-      background: var(--bg);
-      border-bottom: 1px solid var(--line);
-    }
     .cv-frame-wrap {
       flex: 1;
       display: flex;
@@ -49,25 +45,6 @@
   <div class="noise"></div>
   <div class="grid-bg"></div>
 
-  <header class="cv-toolbar sticky top-0 z-50">
-    <nav class="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-      <a href="index.html" class="flex items-center gap-2 text-sm font-bold text-white">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        <span id="cvPageName">Back to Portfolio</span>
-      </a>
-      <div class="flex items-center gap-2">
-        <a id="cvDownloadBtn" href="#" class="btn-primary inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-xs sm:text-sm font-bold">
-          Download CV
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>
-          </svg>
-        </a>
-      </div>
-    </nav>
-  </header>
-
   <div class="cv-frame-wrap" id="cvFrameWrap">
     <div class="cv-state" id="cvLoadingState">Loading résumé…</div>
   </div>
@@ -77,10 +54,6 @@
     (function () {
       const apiRoot = window.PortfolioConfig.apiRoot;
       const viewUrl = `${apiRoot()}/api/profile/resume/view`;
-      const downloadUrl = `${apiRoot()}/api/profile/resume/download`;
-
-      const downloadBtn = document.getElementById("cvDownloadBtn");
-      downloadBtn.href = downloadUrl;
 
       const wrap = document.getElementById("cvFrameWrap");
       const loadingState = document.getElementById("cvLoadingState");
@@ -94,12 +67,11 @@
           const iframe = document.createElement("iframe");
           iframe.src = viewUrl;
           iframe.title = "Résumé / CV preview";
-          iframe.style.height = "calc(100vh - 6rem)";
+          iframe.style.height = "calc(100vh - 2rem)";
           wrap.appendChild(iframe);
         })
         .catch(() => {
           loadingState.textContent = "No résumé has been uploaded yet. Please check back later.";
-          downloadBtn.classList.add("pointer-events-none", "opacity-50");
         });
     })();
   </script>
