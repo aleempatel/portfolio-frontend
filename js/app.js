@@ -6,7 +6,7 @@
 (() => {
   "use strict";
 
-  const { assetUrl } = window.PortfolioConfig;
+  const { assetUrl, apiRoot } = window.PortfolioConfig;
   const API = window.PortfolioAPI;
 
   function esc(str) {
@@ -133,7 +133,7 @@
 
     const cvLink = document.getElementById("cvDownloadLink");
     if (cvLink && profile.resumeUrl) {
-      cvLink.href = assetUrl(profile.resumeUrl);
+      cvLink.href = `${apiRoot()}/api/profile/resume/download`;
     }
 
     bindContact(
