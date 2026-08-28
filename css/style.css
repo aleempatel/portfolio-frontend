@@ -1,9 +1,6 @@
 /* ============================================================
-   Muhammad Aleem — AI & ML Portfolio
-   Main Stylesheet (SEO-SAFE VERSION — .reveal now defaults to
-   visible; JS adds a temporary ".pre" class for the animation
-   instead of hiding content by default. See both .reveal blocks
-   below, marked with SEO-SAFE comments.)
+   Aleem Patel— AI & ML Portfolio
+   Main Stylesheet (extracted verbatim from source HTML)
 ============================================================ */
 
     :root {
@@ -587,24 +584,10 @@
       color: #53697d;
     }
 
-    /* ============================================================
-       SEO-SAFE .reveal (block 1)
-       Content is now VISIBLE by default. JS adds ".pre" only after
-       confirming it's running, then removes it as each element
-       scrolls into view for the fade/slide animation. If JS never
-       runs (blocked, slow, crawler timeout, etc.) nothing was ever
-       hidden — this block gets overridden by block 2 below anyway,
-       but is kept consistent for anyone reading the source top-down.
-    ============================================================ */
     .reveal {
-      opacity: 1;
-      transform: none;
-      transition: opacity .8s ease, transform .8s cubic-bezier(.16,1,.3,1);
-    }
-
-    .reveal.pre {
       opacity: 0;
       transform: translateY(30px);
+      transition: opacity .8s ease, transform .8s cubic-bezier(.16,1,.3,1);
     }
 
     .reveal.visible {
@@ -1150,29 +1133,11 @@ body::before {
   to { transform: scaleX(1); }
 }
 
-/* ============================================================
-   SEO-SAFE .reveal (block 2 — this is the one that actually
-   applies, since it's declared later in the cascade and wins).
-   Content is VISIBLE by default. JS (main.js) adds ".pre" only
-   on elements that aren't already marked ".visible" in the HTML,
-   right before it starts observing them — then removes ".pre"
-   and adds ".visible" once each element scrolls into view. If
-   main.js fails to run for any reason (blocked script, crawler
-   sandbox, JS error elsewhere on the page, etc.), nothing was
-   ever hidden in the first place, so search engines and any
-   visitor always see full content immediately.
-============================================================ */
 .reveal {
-  opacity: 1;
-  transform: none;
-  filter: none;
-  transition: opacity .8s ease, transform .8s var(--ease-out), filter .8s ease;
-}
-
-.reveal.pre {
   opacity: 0;
   transform: translateY(22px) scale(.985);
   filter: blur(4px);
+  transition: opacity .8s ease, transform .8s var(--ease-out), filter .8s ease;
 }
 
 .reveal.visible {
@@ -1250,7 +1215,7 @@ section {
   .glass { backdrop-filter: blur(18px) saturate(130%); -webkit-backdrop-filter: blur(18px) saturate(130%); }
   .section-title { font-size: clamp(2rem, 10vw, 3rem); }
   .section-label { font-size: 1.25rem; letter-spacing: .11em; }
-  .reveal.pre { transform: translateY(14px); filter: none; }
+  .reveal { transform: translateY(14px); filter: none; }
   .cursor-glow { display: none; }
   .mobile-menu-open { animation: menuIn .28s var(--ease-out) both; }
 }
@@ -1268,5 +1233,5 @@ section {
     transition-duration: .001ms !important;
   }
   .aurora, .floating-chip, .cursor-glow { animation: none !important; }
-  .reveal, .reveal.pre { opacity: 1; transform: none; filter: none; }
+  .reveal { opacity: 1; transform: none; filter: none; }
 }

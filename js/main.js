@@ -1,9 +1,8 @@
 /* ============================================================
-   Muhammad Aleem — AI & ML Portfolio
+   Aleem Patel - AI & ML Portfolio
    Main interactivity + Three.js neural network
-   (SEO-SAFE VERSION — reveal animation no longer hides content
-   by default, and the Three.js block is isolated so it can never
-   block the rest of the page's script from finishing.)
+   (extracted verbatim from source HTML, single IIFE preserved
+   so behavior/animation is identical to the original)
 ============================================================ */
     (() => {
       "use strict";
@@ -60,28 +59,13 @@
       sections.forEach(section => sectionObserver.observe(section));
 
       /* ============================================================
-         REVEAL ANIMATIONS + SKILL PROGRESS  (SEO-SAFE)
-         Content is visible by default in CSS (see style.css: .reveal
-         now starts at opacity:1). Here we only ADD the hidden ".pre"
-         state right before observing each element that isn't already
-         marked "visible" in the HTML — then remove it once the element
-         scrolls into view, producing the same fade/slide effect for
-         real visitors. If this script fails to run, or a renderer
-         (like a search engine crawler) never scrolls, nothing was ever
-         hidden in the first place — content stays fully visible.
+         REVEAL ANIMATIONS + SKILL PROGRESS
       ============================================================ */
-
-      const revealItems = document.querySelectorAll(".reveal");
-
-      revealItems.forEach(el => {
-        if (!el.classList.contains("visible")) el.classList.add("pre");
-      });
 
       const revealObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => {
           if (!entry.isIntersecting) return;
 
-          entry.target.classList.remove("pre");
           entry.target.classList.add("visible");
 
           // Only override a progress-fill's width from data-progress when that
@@ -102,23 +86,7 @@
         threshold: .12
       });
 
-      revealItems.forEach(el => revealObserver.observe(el));
-
-      // Fail-safe: force-reveal anything still marked ".pre" after 3s, in
-      // case an element never intersects (e.g. a renderer that doesn't
-      // scroll/resize the page, zero-height containers, or content injected
-      // by app.js after this observer was already set up). This guarantees
-      // nothing is left permanently invisible to a search engine.
-      setTimeout(() => {
-        document.querySelectorAll(".reveal.pre").forEach(el => {
-          el.classList.remove("pre");
-          el.classList.add("visible");
-          if (el.dataset.progress) {
-            const progress = el.querySelector(".progress-fill");
-            if (progress) progress.style.width = el.dataset.progress + "%";
-          }
-        });
-      }, 3000);
+      document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
 
       // Exposed so app.js can hook animations onto cards it injects after this
       // script has already run its initial querySelectorAll pass.
@@ -150,10 +118,7 @@
       }
 
       window.PortfolioAnimate = {
-        reveal(el) {
-          if (!el.classList.contains("visible")) el.classList.add("pre");
-          revealObserver.observe(el);
-        },
+        reveal(el) { revealObserver.observe(el); },
         tilt(el) { attachTilt(el); },
       };
 
@@ -278,18 +243,7 @@
 
       /* ============================================================
          THREE.JS — INTERACTIVE 3D NEURAL NETWORK
-         Wrapped in try/catch: if the Three.js CDN script is slow,
-         blocked, or fails for any reason (some crawler sandboxes
-         restrict third-party script domains), the rest of this file
-         — nav, reveal animations, contact form, role rotator, and the
-         final "loaded" class below — still runs normally instead of
-         the whole script silently dying partway through.
       ============================================================ */
-
-      try {
-      if (typeof THREE === "undefined") {
-        throw new Error("THREE.js failed to load — skipping 3D neural network, rest of page unaffected.");
-      }
 
       const canvas = document.getElementById("neural-canvas");
       /* mobile-neural-visibility: desktop path remains the original full neural network */
@@ -695,10 +649,6 @@
       }
 
       window.addEventListener("resize", resizeThree);
-
-      } catch (threeErr) {
-        console.warn("[neural-canvas] Skipped 3D background:", threeErr.message);
-      }
 
       /* ============================================================
          DYNAMIC HERO DEPTH
